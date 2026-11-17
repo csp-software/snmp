@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S N Mudbidri Polytechnic | Digital Work Space</title>
+  <title>Digital Inspiration | Digital Work Space</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,165 +11,187 @@
     body { font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-100 min-h-screen flex flex-col justify-between items-center pt-6 sm:pt-10 px-4 pb-8">
+<body class="bg-slate-100 min-h-screen flex justify-center items-start pt-6 sm:pt-10 px-4 pb-8">
 
-  <div class="w-full max-w-2xl space-y-6">
-    <!-- Main Container -->
-    <div id="mainCard" class="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden transition-all duration-300">
-      
-      <!-- Header -->
-      <div class="bg-indigo-600 px-6 py-5 text-white text-center">
-        <p class="text-[11px] font-semibold uppercase tracking-widest text-indigo-200">S. N. Mudbidri Polytechnic, Moodbidri</p>
-        <h1 id="headerTitle" class="text-xl font-bold tracking-tight mt-0.5">Digital Work Space</h1>
-        <p id="headerSub" class="text-xs text-indigo-100 mt-1">Select an activity and pay the fee to unlock your form</p>
+  <!-- Main Container -->
+  <div id="mainCard" class="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden transition-all duration-300">
+    
+    <!-- Header -->
+    <div class="bg-indigo-600 px-6 pt-5 pb-4 text-white text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-widest text-indigo-200">Digital Inspiration</p>
+      <h1 id="headerTitle" class="text-xl font-bold tracking-tight mt-0.5">Digital Work Space</h1>
+      <p id="headerSub" class="text-xs text-indigo-100 mt-1">Pay the fee to unlock your form</p>
+    </div>
+
+    <!-- Compact Top Navigation Menu -->
+    <nav id="topNav" class="bg-indigo-700/95 px-2 py-2 flex flex-wrap justify-center gap-1 border-t border-indigo-500/40 text-xs">
+      <button type="button" onclick="switchTab('register')" id="nav-register" class="nav-btn px-3 py-1.5 rounded-lg font-semibold bg-white text-indigo-700 shadow-xs transition">
+        Register
+      </button>
+      <button type="button" onclick="switchTab('catalog')" id="nav-catalog" class="nav-btn px-3 py-1.5 rounded-lg font-medium text-indigo-100 hover:bg-indigo-600 transition">
+        Fee Catalog
+      </button>
+      <button type="button" onclick="switchTab('about')" id="nav-about" class="nav-btn px-3 py-1.5 rounded-lg font-medium text-indigo-100 hover:bg-indigo-600 transition">
+        About Us
+      </button>
+      <button type="button" onclick="switchTab('contact')" id="nav-contact" class="nav-btn px-3 py-1.5 rounded-lg font-medium text-indigo-100 hover:bg-indigo-600 transition">
+        Contact
+      </button>
+      <button type="button" onclick="switchTab('policies')" id="nav-policies" class="nav-btn px-3 py-1.5 rounded-lg font-medium text-indigo-100 hover:bg-indigo-600 transition">
+        Policies
+      </button>
+    </nav>
+
+    <!-- TAB 1: Payment & Registration Interface (Default) -->
+    <div id="tab-register" class="tab-panel p-6 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
+        <input type="text" id="participantName" required placeholder="Enter full name" 
+          class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
       </div>
 
-      <!-- Step 1: Payment Interface -->
-      <div id="paymentSection" class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
-          <input type="text" id="participantName" required placeholder="Enter full name" 
-            class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Choose Activity / Event</label>
-          <select id="eventSelect" required onchange="onEventChange()" 
-            class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm bg-white">
-            <option value="" disabled selected>Loading...</option>
-          </select>
-        </div>
-
-        <div id="eventDetails" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
-          <div class="flex justify-between items-center text-sm">
-            <span class="text-slate-500">Registration Fee:</span>
-            <span id="displayAmount" class="font-bold text-indigo-600 text-base">₹0</span>
-          </div>
-          <p id="displayDesc" class="text-xs text-slate-500 italic border-t border-slate-200 pt-2"></p>
-        </div>
-
-        <button type="button" id="payBtn" onclick="initiatePayment()" disabled
-          class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-semibold rounded-lg shadow-md transition duration-150 flex items-center justify-center space-x-2 text-sm">
-          <span>Proceed to Pay</span>
-        </button>
-
-        <div id="statusMsg" class="hidden text-center text-xs py-2.5 px-3 rounded-lg font-medium"></div>
-
-        <!-- Terms and Conditions Box -->
-        <div class="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3.5 mt-2">
-          <div class="flex items-center space-x-1.5 mb-2">
-            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <h2 class="text-[11px] font-bold uppercase tracking-wider text-amber-900">Terms &amp; Conditions</h2>
-          </div>
-          <ol class="list-decimal list-outside ml-4 space-y-1.5 text-xs text-slate-700 leading-relaxed">
-            <li>No refund will be provided once the payment is confirmed and the registration form is submitted.</li>
-            <li>In case any amount is debited and the registration or form submission fails due to a technical issue, the refund will be processed within 7 working days.</li>
-          </ol>
-        </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Choose</label>
+        <select id="eventSelect" required onchange="onEventChange()" 
+          class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm bg-white">
+          <option value="" disabled selected>Loading...</option>
+        </select>
       </div>
 
-      <!-- Step 2: Unlocked Form (Hidden until verified) -->
-      <div id="formSection" class="hidden p-4">
-        <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3 rounded-lg mb-3 flex items-center justify-between text-xs">
-          <div>
-            <span class="font-bold">Payment Verified</span>
-            <p id="confirmedPaymentId" class="text-[11px] text-emerald-600 font-mono"></p>
-          </div>
-          <span class="px-2 py-1 bg-emerald-200 text-emerald-900 rounded font-semibold text-[10px]">PAID</span>
+      <div id="eventDetails" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-500">Registration Fee:</span>
+          <span id="displayAmount" class="font-bold text-indigo-600 text-base">₹0</span>
         </div>
-
-        <!-- Google Form Container & Progress Spinner -->
-        <div class="relative w-full rounded-lg overflow-hidden border border-slate-200" style="height: 650px;">
-          <div id="loadingOverlay" class="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center space-y-3">
-            <svg class="animate-spin h-9 w-9 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <div class="text-center">
-              <p class="text-sm font-semibold text-slate-800">Please wait...</p>
-              <p class="text-xs text-slate-500">Preparing and loading your form</p>
-            </div>
-          </div>
-
-          <iframe id="googleFormIframe" src="" onload="onIframeLoaded()" class="w-full h-full border-0" frameborder="0" marginheight="0" marginwidth="0">
-            Loading form...
-          </iframe>
-        </div>
+        <p id="displayDesc" class="text-xs text-slate-500 italic border-t border-slate-200 pt-2"></p>
       </div>
 
-      <!-- Footer inside the card -->
-      <div class="border-t border-slate-100 bg-slate-50/70 py-3 text-center">
-        <p class="text-[11px] font-medium tracking-wide text-slate-400">
-          Designed by: <span class="font-semibold text-slate-600">C S Pradeep Kumar</span>
-        </p>
+      <button type="button" id="payBtn" onclick="initiatePayment()" disabled
+        class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-300 text-white font-semibold rounded-lg shadow-md transition duration-150 flex items-center justify-center space-x-2 text-sm">
+        <span>Proceed to Pay</span>
+      </button>
+
+      <div id="statusMsg" class="hidden text-center text-xs py-2.5 px-3 rounded-lg font-medium"></div>
+
+      <!-- Terms and Conditions Box -->
+      <div class="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3.5 mt-2">
+        <div class="flex items-center space-x-1.5 mb-2">
+          <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h2 class="text-[11px] font-bold uppercase tracking-wider text-amber-900">Terms &amp; Conditions</h2>
+        </div>
+        <ol class="list-decimal list-outside ml-4 space-y-1.5 text-xs text-slate-700 leading-relaxed">
+          <li>No refund will be provided once the payment is confirmed and the registration form is submitted.</li>
+          <li>In case any amount is debited and the registration or form submission fails due to a technical issue, the refund will be processed within 7 working days.</li>
+        </ol>
       </div>
     </div>
 
-    <!-- Public Catalog Section (Required by Razorpay to display descriptions & prices clearly) -->
-    <div id="catalogSection" class="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-slate-200 p-5">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+    <!-- TAB 2: Activity & Fee Catalog -->
+    <div id="tab-catalog" class="tab-panel hidden p-6 space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
         <div>
-          <h2 class="text-sm font-bold text-slate-800">Available Activities &amp; Fee Structure</h2>
-          <p class="text-[11px] text-slate-500">Official registration fees and service descriptions</p>
+          <h2 class="text-sm font-bold text-slate-800">Activities &amp; Fee Structure</h2>
+          <p class="text-[11px] text-slate-500">Transparent pricing &amp; service descriptions</p>
         </div>
-        <span class="text-[10px] font-semibold uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full">INR (₹)</span>
+        <span class="text-[10px] font-semibold bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full">INR (₹)</span>
       </div>
-      <div id="catalogList" class="space-y-2.5 text-xs text-slate-600">
+      <div id="catalogList" class="space-y-2.5 text-xs text-slate-600 max-h-80 overflow-y-auto pr-1">
         <p class="text-slate-400 italic">Loading catalog...</p>
       </div>
     </div>
 
-    <!-- Razorpay Compliance & Institution Details Section -->
-    <footer class="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-md border border-slate-200 p-5 text-xs text-slate-600 space-y-4">
-      <div class="border-b border-slate-100 pb-3">
-        <h3 class="font-bold text-slate-800 text-sm">About Us &amp; Contact Information</h3>
-        <p class="mt-1 leading-relaxed text-slate-600">
-          <strong>S. N. Mudbidri Polytechnic (SNMP)</strong> is an AICTE-approved technical education institution located in Moodbidri, Dakshina Kannada, Karnataka. This portal facilitates online student registration, academic workshops, and institutional activity fee payments.
-        </p>
-        <div class="mt-2.5 bg-slate-50 rounded-lg p-3 border border-slate-200/70 space-y-1 text-[11px]">
-          <p><span class="font-semibold text-slate-700">Address:</span> S. N. Mudbidri Polytechnic, Moodbidri, Dakshina Kannada, Karnataka - 574227, India</p>
-          <p><span class="font-semibold text-slate-700">Email:</span> <a href="mailto:iamcsp@zohomail.in" class="text-indigo-600 hover:underline">iamcsp@zohomail.in</a></p>
-          <p><span class="font-semibold text-slate-700">Phone:</span> +91 81473 56664</p>
-        </div>
-      </div>
-
-      <!-- Policy Links Grid -->
-      <div>
-        <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">Legal &amp; Compliance Policies</p>
-        <div class="flex flex-wrap gap-2">
-          <button type="button" onclick="openPolicy('terms')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-medium transition">
-            Terms &amp; Conditions
-          </button>
-          <button type="button" onclick="openPolicy('refund')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-medium transition">
-            Cancellation &amp; Refund Policy
-          </button>
-          <button type="button" onclick="openPolicy('privacy')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-medium transition">
-            Privacy Policy
-          </button>
-          <button type="button" onclick="openPolicy('shipping')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-medium transition">
-            Service Delivery Policy
-          </button>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Policy Modal -->
-  <div id="policyModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4" onclick="closePolicy(event)">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-3" onclick="event.stopPropagation()">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-        <h3 id="policyTitle" class="text-base font-bold text-slate-800">Policy</h3>
-        <button type="button" onclick="closePolicy()" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-2">&times;</button>
-      </div>
-      <div id="policyBody" class="text-xs text-slate-600 space-y-2.5 leading-relaxed max-h-80 overflow-y-auto"></div>
-      <div class="pt-2 text-right">
-        <button type="button" onclick="closePolicy()" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-lg hover:bg-indigo-700">
-          Close
-        </button>
+    <!-- TAB 3: About Us -->
+    <div id="tab-about" class="tab-panel hidden p-6 space-y-3 text-xs text-slate-600 leading-relaxed">
+      <h2 class="text-sm font-bold text-slate-800 border-b border-slate-100 pb-2">About Digital Inspiration</h2>
+      <p>
+        <strong>Digital Inspiration</strong> is an initiative dedicated to providing streamlined digital workspace tools, online registration portals, technical workshops, and educational skill-building resources.
+      </p>
+      <p>
+        Through this platform, participants can easily select verified activities, complete secure online payments via UPI, Cards, or Net Banking, and immediately access their respective registration forms and digital resources.
+      </p>
+      <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-3 text-[11px] text-indigo-900">
+        <strong>Instant Digital Fulfillment:</strong> All registrations and form access are unlocked automatically upon payment confirmation.
       </div>
     </div>
+
+    <!-- TAB 4: Contact Us -->
+    <div id="tab-contact" class="tab-panel hidden p-6 space-y-3 text-xs text-slate-600">
+      <h2 class="text-sm font-bold text-slate-800 border-b border-slate-100 pb-2">Contact &amp; Support Details</h2>
+      <p class="leading-relaxed">
+        For any queries regarding activity registration, form access, or payment reference verification, please reach out using the official contact details below:
+      </p>
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2 text-xs">
+        <p><span class="font-semibold text-slate-800">Organization:</span> Digital Inspiration</p>
+        <p><span class="font-semibold text-slate-800">Coordinator:</span> C S Pradeep Kumar</p>
+        <p><span class="font-semibold text-slate-800">Address:</span> Moodbidri, Dakshina Kannada, Karnataka - 574227, India</p>
+        <p><span class="font-semibold text-slate-800">Email:</span> <a href="mailto:iamcsp@zohomail.in" class="text-indigo-600 font-medium hover:underline">iamcsp@zohomail.in</a></p>
+        <p><span class="font-semibold text-slate-800">Phone / WhatsApp:</span> <a href="tel:+918147356664" class="text-indigo-600 font-medium hover:underline">+91 81473 56664</a></p>
+      </div>
+    </div>
+
+    <!-- TAB 5: Compliance Policies -->
+    <div id="tab-policies" class="tab-panel hidden p-6 space-y-3 text-xs text-slate-600 leading-relaxed max-h-96 overflow-y-auto">
+      <h2 class="text-sm font-bold text-slate-800 border-b border-slate-100 pb-2">Legal &amp; Compliance Policies</h2>
+      
+      <div class="space-y-1">
+        <h3 class="font-bold text-slate-800">1. Terms &amp; Conditions</h3>
+        <p>By using Digital Inspiration to register and pay for an activity, you confirm that all submitted details are accurate. Registrations are non-transferable, and no refund will be provided once payment is confirmed and the form is submitted.</p>
+      </div>
+
+      <div class="space-y-1 border-t border-slate-100 pt-2.5">
+        <h3 class="font-bold text-slate-800">2. Cancellation &amp; Refund Policy</h3>
+        <p>Once a payment is confirmed and the form is submitted, cancellations are not permitted. However, if an amount is debited and the registration or form submission fails due to a technical error, a full refund will be processed to the original payment method within <strong>7 working days</strong>.</p>
+      </div>
+
+      <div class="space-y-1 border-t border-slate-100 pt-2.5">
+        <h3 class="font-bold text-slate-800">3. Privacy Policy</h3>
+        <p>We collect only your name, selected activity, payment reference ID, and form responses for registration management. All payment credentials are handled securely by Razorpay and are never stored on our servers.</p>
+      </div>
+
+      <div class="space-y-1 border-t border-slate-100 pt-2.5">
+        <h3 class="font-bold text-slate-800">4. Service Delivery Policy</h3>
+        <p>This portal provides instant digital access to registration forms and online activities upon payment verification. No physical shipping is involved.</p>
+      </div>
+    </div>
+
+    <!-- Step 2: Unlocked Form (Hidden until verified) -->
+    <div id="formSection" class="hidden p-4">
+      <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3 rounded-lg mb-3 flex items-center justify-between text-xs">
+        <div>
+          <span class="font-bold">Payment Verified</span>
+          <p id="confirmedPaymentId" class="text-[11px] text-emerald-600 font-mono"></p>
+        </div>
+        <span class="px-2 py-1 bg-emerald-200 text-emerald-900 rounded font-semibold text-[10px]">PAID</span>
+      </div>
+
+      <!-- Google Form Container & Progress Spinner -->
+      <div class="relative w-full rounded-lg overflow-hidden border border-slate-200" style="height: 650px;">
+        <div id="loadingOverlay" class="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center space-y-3">
+          <svg class="animate-spin h-9 w-9 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <div class="text-center">
+            <p class="text-sm font-semibold text-slate-800">Please wait...</p>
+            <p class="text-xs text-slate-500">Preparing and loading your form</p>
+          </div>
+        </div>
+
+        <iframe id="googleFormIframe" src="" onload="onIframeLoaded()" class="w-full h-full border-0" frameborder="0" marginheight="0" marginwidth="0">
+          Loading form...
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Footer inside the card -->
+    <div class="border-t border-slate-100 bg-slate-50/70 py-3 text-center">
+      <p class="text-[11px] font-medium tracking-wide text-slate-400">
+        Designed by: <span class="font-semibold text-slate-600">C S Pradeep Kumar</span>
+      </p>
+    </div>
+
   </div>
 
   <script>
@@ -183,53 +205,21 @@
     let selectedEvent = null;
     let isFormTriggered = false;
 
-    const POLICIES = {
-      terms: {
-        title: "Terms & Conditions",
-        content: `
-          <p>Welcome to the S. N. Mudbidri Polytechnic Digital Work Space portal. By proceeding with a payment, you agree to the following terms:</p>
-          <p><strong>1. Accurate Information:</strong> Participants must enter their valid full name and accurate academic/registration details in the unlocked form.</p>
-          <p><strong>2. Non-Transferable:</strong> Registration fees paid for a specific workshop, event, or academic activity cannot be transferred to another individual or activity.</p>
-          <p><strong>3. Finality of Submission:</strong> No refund will be provided once the payment is confirmed and the registration form is submitted.</p>
-        `
-      },
-      refund: {
-        title: "Cancellation & Refund Policy",
-        content: `
-          <p><strong>1. Confirmed Registrations:</strong> Once a payment is confirmed and the registration form is submitted, cancellations are not permitted and no refund will be issued.</p>
-          <p><strong>2. Failed Transactions / Technical Errors:</strong> In case an amount is debited from your bank account/UPI and the registration or form submission fails due to a technical issue, the full debited amount will be refunded automatically to the original payment method within <strong>7 working days</strong>.</p>
-          <p><strong>3. Support:</strong> For payment reference inquiries, contact <a href="mailto:iamcsp@zohomail.in" class="text-indigo-600 underline">iamcsp@zohomail.in</a> or +91 81473 56664 with your Razorpay Payment ID.</p>
-        `
-      },
-      privacy: {
-        title: "Privacy Policy",
-        content: `
-          <p><strong>1. Data Collection:</strong> We collect only your name, selected activity, payment reference ID, and the details you submit in the official registration form.</p>
-          <p><strong>2. Payment Security:</strong> All payments are processed securely via Razorpay. We do not store your credit/debit card numbers, UPI PINs, or net banking credentials on our servers.</p>
-          <p><strong>3. Data Usage:</strong> Collected information is strictly used for institutional event administration, attendance, and certification at S. N. Mudbidri Polytechnic.</p>
-        `
-      },
-      shipping: {
-        title: "Service Delivery Policy (Digital & Event Access)",
-        content: `
-          <p><strong>1. Instant Digital Access:</strong> This portal provides digital registration access for academic activities, workshops, and institutional events. No physical goods are shipped.</p>
-          <p><strong>2. Immediate Unlock:</strong> Immediately upon successful payment confirmation from Razorpay, the corresponding registration form is unlocked on-screen without delay.</p>
-        `
-      }
-    };
+    function switchTab(tabName) {
+      // Hide all tab panels
+      document.querySelectorAll('.tab-panel').forEach(el => el.classList.add('hidden'));
+      // Reset all nav button styles
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-indigo-700', 'font-semibold', 'shadow-xs');
+        btn.classList.add('text-indigo-100', 'font-medium', 'hover:bg-indigo-600');
+      });
 
-    function openPolicy(key) {
-      const policy = POLICIES[key];
-      if (!policy) return;
-      document.getElementById('policyTitle').textContent = policy.title;
-      document.getElementById('policyBody').innerHTML = policy.content;
-      document.getElementById('policyModal').classList.remove('hidden');
-    }
-
-    function closePolicy(e) {
-      if (!e || e.target.id === 'policyModal') {
-        document.getElementById('policyModal').classList.add('hidden');
-      }
+      // Show selected tab panel
+      document.getElementById('tab-' + tabName).classList.remove('hidden');
+      // Highlight active nav button
+      const activeBtn = document.getElementById('nav-' + tabName);
+      activeBtn.classList.remove('text-indigo-100', 'font-medium', 'hover:bg-indigo-600');
+      activeBtn.classList.add('bg-white', 'text-indigo-700', 'font-semibold', 'shadow-xs');
     }
 
     window.onload = function() {
@@ -256,13 +246,13 @@
         opt.textContent = `${evt.name} (₹${evt.amount})`;
         select.appendChild(opt);
 
-        // Populate public catalog card for Razorpay verification
+        // Populate catalog tab
         const item = document.createElement('div');
         item.className = "flex items-start justify-between p-3 rounded-xl bg-slate-50 border border-slate-200/80 gap-3";
         item.innerHTML = `
           <div>
             <p class="font-semibold text-slate-800">${evt.name}</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">${evt.description || "Official institutional registration & digital form access."}</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">${evt.description || "Official registration & digital form access."}</p>
           </div>
           <span class="font-bold text-indigo-600 text-sm shrink-0">₹${evt.amount}</span>
         `;
@@ -295,7 +285,7 @@
         key: RAZORPAY_KEY,
         amount: selectedEvent.amount * 100, // Amount in paise
         currency: "INR",
-        name: "S N Mudbidri Polytechnic",
+        name: "Digital Inspiration",
         description: selectedEvent.name,
         prefill: { name: name },
         theme: { color: "#4f46e5" },
@@ -327,9 +317,9 @@
         })
       });
 
-      // Hide payment fields & catalog
-      document.getElementById('paymentSection').classList.add('hidden');
-      document.getElementById('catalogSection').classList.add('hidden');
+      // Hide payment tabs & nav bar once paid
+      document.querySelectorAll('.tab-panel').forEach(el => el.classList.add('hidden'));
+      document.getElementById('topNav').classList.add('hidden');
 
       // Update Header
       document.getElementById('headerTitle').textContent = evt.name;
